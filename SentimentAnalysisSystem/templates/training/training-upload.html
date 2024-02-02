@@ -1,0 +1,88 @@
+{% extends 'index.html' %}
+
+{% block style_content %}
+<link href="/static/css/dropify.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box" style="border: 2px solid #dddddd; text-align: center;">
+                        <strong style="font-size: 26px;">
+                            {{ message }}
+                        </strong>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title">
+                                请选择一个用户的评论数据进行上传
+                                <br>
+                                <span>【注】基于情感分析的用户画像过程较长请耐心等待</span>
+                            </h4>
+                            <form action="{% url 'training:upload' %}" method="post" id="upload-form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                            <div class="dropify-wrapper" style="height: 514px">
+                                <div class="dropify-message">
+                                    <span class="file-icon"></span>
+                                    <p>在这里拖放文件或单击</p>
+                                    <p class="dropify-error">哎呀，上传了错误的东西。</p>
+                                </div>
+                                <div class="dropify-loader"></div>
+                                <div class="dropify-errors-container">
+                                    <ul></ul>
+                                </div>
+                                <input type="file" id="input-file-now-custom-2" name="media_file" class="dropify" data-height="500">
+                                <button type="button" class="dropify-clear">移除</button>
+
+                                <div class="dropify-preview">
+                                    <span class="dropify-render"></span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename">
+                                                <span class="file-icon"></span>
+                                                <span class="dropify-filename-inner"></span>
+                                            </p>
+                                            <p class="dropify-infos-message">拖放或单击以替换</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% if message == "上传成功！" %}
+                    <div class="col-sm-12">
+                    <div class="card-body" style="border: 2px solid #dddddd;text-align: center;">
+                        <a class="btn btn-primary btn-sm btn-block text-white" href="{% url 'training:sentiment_analysis' %}">
+                            <span style="font-size: 20px;">开始情感分析</span>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+<script src="/static/js/dropify.init.js"></script>
+<script src="/static/js/dropify.min.js"></script>
+
+{% block script_content %}
+    <script>
+        $('#input-file-now-custom-2').change(function() {
+            $('#upload-form').submit();
+            $('#loading').show();
+        });
+    </script>
+{% endblock %}
