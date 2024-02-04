@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'login.apps.LoginConfig',
     'training.apps.TrainingConfig',
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -76,9 +77,17 @@ WSGI_APPLICATION = "SentimentAnalysisSystem.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "sentiment_analysis",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
     }
 }
 
@@ -105,13 +114,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "zh-hans"
+LANGUAGE_CODE = "zh-hans"  # 设置系统语言
 
-TIME_ZONE = "Asia/Shanghai"
+TIME_ZONE = "Asia/Shanghai"  # 设置系统时区
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False  # 禁用美国时间
 
 
 # Static files (CSS, JavaScript, Images)

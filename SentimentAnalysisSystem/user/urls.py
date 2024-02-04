@@ -1,5 +1,5 @@
 """
-URL configuration for login.
+URL configuration for user.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,12 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import re_path, path
-from login import views
+from user import views
 
-app_name = 'login'
+app_name = 'user'
 urlpatterns = [
-    # 登录界面
-    path('', views.Login.as_view(), name='login'),
-    # 退出登录
-    re_path(r'^logout/$', views.logout, name='logout'),
+    # 展示用户列表
+    re_path(r'^display_user/$', views.display_user, name='display_user'),
+    # 上传测试集进行用户画像
+    re_path(r'^user_portrait/$', views.UserPortrait.as_view(), name='user_portrait'),
+    # 注册用户
+    re_path(r'^register/$', views.UserRegister.as_view(), name='register'),
+    # 执行个性化推荐
+    re_path(r'^recommend/$', views.PersonalizedRecommendation.as_view(), name='recommend'),
+    # 展示个性化推荐结果
+    re_path(r'^display_recommend/$', views.display_recommend, name='display_recommend'),
 ]

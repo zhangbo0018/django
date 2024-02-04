@@ -13,7 +13,7 @@ from sklearn.neural_network import MLPClassifier
 
 # 上传数据集
 class Upload(View):
-    """预测功能：上传测试集"""
+    """上传测试集"""
 
     def get(self, request):
         if os.listdir(settings.MEDIA_ROOT):
@@ -25,7 +25,7 @@ class Upload(View):
                         os.remove(file_p)
                 except:
                     pass
-        return render(request, 'training/training-upload.html', context={'message': "上传数据"})
+        return render(request, 'training/training-upload.html', context={'message': "上传数据用于画像建模"})
 
     def post(self, request):
         global file_name
@@ -75,13 +75,13 @@ class SentimentAnalysis(View):
         # 定义多层感知机MLP分类器
         mlp = MLPClassifier(hidden_layer_sizes=(64, 64, 32))
 
-        # 保存mlp模型
-        model_path = os.path.join(settings.STATICFILES_DIRS[0], 'model/mlp_model.pkl')
-        print(model_path)
-        joblib.dump(mlp, os.path.join(settings.STATICFILES_DIRS[0], 'model/mlp_model.pkl'))
-
         # 拟合模型
         mlp.fit(X_train, y_train)
+
+        # 保存mlp模型
+        model_path = os.path.join(settings.STATICFILES_DIRS[0], 'model/mlp_model.pkl')
+        joblib.dump(mlp, model_path)
+
         return render(request, 'training/training-visualization.html')
 
 

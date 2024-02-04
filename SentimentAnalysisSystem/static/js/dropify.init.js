@@ -1,3 +1,10 @@
+console.log('非源码，仅用作演示。下载源码请访问：https://www.17sucai.com');/*
+ Template Name: Zoogler - Bootstrap 4 Admin Dashboard
+ Author: Mannatthemes
+ Website: www.mannatthemes.com
+ File: dropify js
+ */
+
 $(function () {
     // Basic
     $('.dropify').dropify();
@@ -37,4 +44,4 @@ $(function () {
             drDestroy.init();
         }
     })
-});
+});console.log('非源码，仅用作演示。下载源码请访问：https://www.17sucai.com');

@@ -91,10 +91,10 @@
             <div id="navigation"><!-- Navigation Menu-->
                 <ul class="navigation-menu">
                     <li class="has-submenu">
-                        <a href="/"><i class="dripicons-device-desktop"></i>开始用户画像</a>
+                        <a href="{% url 'user:user_portrait' %}"><i class="dripicons-device-desktop"></i>开始用户画像</a>
                     </li>
                     <li class="has-submenu">
-                        <a href=""><i class="dripicons-to-do"></i>个性化推荐</a>
+                        <a href="{% url 'user:display_recommend' %}"><i class="dripicons-to-do"></i>个性化推荐</a>
                     </li>
                     <li class="has-submenu">
                         <a href="{% url 'training:upload' %}"><i class="dripicons-blog"></i>在线数据建模</a>

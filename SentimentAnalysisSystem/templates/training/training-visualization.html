@@ -27,16 +27,9 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body" style="text-align:center;">
-                            {% if video_name %}
-{#                                <video controls>#}
-{#                                  <source width="80%" src="{% url 'training:stream' %}" type="video/mp4">#}
-{#                                </video>#}
-{#                                <a href="{% url 'training:stream' %}">检测完毕-点击观看视频</a>#}
-                                <strong>检测完毕-请下载视频观看</strong>
-                            {% endif %}
-                            {% if img_name %}
+                            {% for img in img_name %}
                                 <img width="80%" src="/static/helmet/runs/detect/exp/{{ img_name }}" alt="图片加载失败">
-                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

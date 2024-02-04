@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
     <link href="static/css/style.css" rel="stylesheet" type="text/css">
     <style>
         .card {
-          margin-top: 300px;
+          margin-top: 200px;
         }
     </style>
 </head>
@@ -21,23 +21,29 @@
     <div class="card">
         <div class="card-body">
             <div class="text-center m-b-15">
-                <span class="logo logo-admin">
                     <p>基于python的</p>
                     <p>商品评价及用户画像</p>
                     <p>情感信息智能提取及推荐系统</p>
-                </span>
             </div>
             <div class="p-3">
                 <form class="form-horizontal m-t-20" action="{% url 'login:login' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group row">
                         <div class="col-12">
-                            <input class="form-control" name="username" type="text" required="" placeholder="管理员名称">
+                            <input class="form-control" name="username" type="text" required placeholder="姓名">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-12">
-                            <input class="form-control" name="password" type="password" required="" placeholder="管理员密码"></div>
+                            <input class="form-control" name="password" type="password" required placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="form-group m-t-10 mb-0 row">
+                        <div class="col-12 m-t-20 text-center">
+                            <a href="{% url 'user:register' %}" class="text-muted">
+                                未注册？
+                            </a>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-12" style="text-align: center; color: red;">
