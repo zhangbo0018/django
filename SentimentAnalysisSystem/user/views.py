@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 import joblib
 import jieba
@@ -13,12 +13,16 @@ from django.conf import settings
 from math import floor
 from django.utils import timezone
 from user.models import User, UserCategoryAffinity
-
+from wordcloud import WordCloud
+import jieba
 
 # Create user views here.
 r_count = 0
 product_detail = []
-
+accuracy = 0
+interest_preference = pd.Series()
+comment = []
+goods_types = []
 
 def display_user(request):
 
@@ -51,6 +55,8 @@ class UserPortrait(View):
             # 导入数据集
             data = pd.read_excel(file_path, sheet_name='Sheet1')
             y = data['情感分析']
+            global comment
+            comment = data['评价'].tolist()
 
             # 遍历整张表格，对所有评论进行分词
             words = []
@@ -67,12 +73,15 @@ class UserPortrait(View):
             y_pred = mlp.predict(X_test)
             y_pred = np.array(y_pred)
             # 计算True的比例
+            global accuracy
+            global interest_preference
             accuracy = np.mean(y_pred == y)
-            print('情感分析预测准确率', np.round(accuracy, 2))
+            accuracy = np.round(accuracy, 2)
 
             # 三、基于情感分析提取用户兴趣偏好特征提取（画像）
             # 按'商品品类'进行分组，对'情感分析'字段中的1进行计数并计算占比（即兴趣偏好）
             interest_preference = data.groupby('商品品类')['情感分析'].apply(lambda x: (x == 1).sum() / len(x))
+
             # 保存用户画像数据到数据库
             username = request.COOKIES.get('username')
             user = User.objects.get(name=username)
@@ -105,7 +114,7 @@ class UserRegister(View):
         print(username, gender, password, create_time)
 
         # 返回响应
-        return render(request, 'index.html')
+        return render(request, 'login/page-login.html')
 
 
 class PersonalizedRecommendation(View):
@@ -140,7 +149,8 @@ class PersonalizedRecommendation(View):
         rounded_counts[rounded_counts > 5] = 3
         rounded_counts['相关度'].astype(int)
         rounded_counts = rounded_counts['相关度'].to_dict()
-        print(rounded_counts)
+        global goods_types
+        goods_types = list(rounded_counts.keys())
 
         # 三、爬取商品信息
         if user.gender:
@@ -166,7 +176,7 @@ class PersonalizedRecommendation(View):
             'product_detail': product_detail,
         }
         product_detail = []
-        return render(request, 'user/user-visualization.html', context=context)
+        return render(request, 'user/user-recommend.html', context=context)
 
 
 class ProductCrawler:
@@ -221,6 +231,66 @@ class ProductCrawler:
 def display_recommend(request):
     global product_detail
     if product_detail:
-        return render(request, 'user/user-visualization.html', context={'product_detail': product_detail})
+        return render(request, 'user/user-recommend.html', context={'product_detail': product_detail})
     else:
         return render(request, 'user/user-upload.html', context={'message': '请先进行用户画像'})
+
+
+def visualization(request):
+
+    global interest_preference
+    global comment
+
+    user = User.objects.get(name=request.COOKIES.get('username'))
+    if not interest_preference.empty:
+        # 获取索引
+        index = interest_preference.index.tolist()
+        # 获取相关的兴趣度
+        affinity = interest_preference.tolist()
+        # 变成字典
+        data = interest_preference.to_dict()
+        print(index, affinity)
+        # 构建词云
+        # 导入数据集
+        # 遍历整张表格，对所有评论进行分词
+        text = " ".join(comment)
+        print(text)
+        # 首先进行分词
+        word_list = jieba.lcut(text)
+        # 在用空格将分词拼成字符串
+        text_new = ' '.join(word_list)
+        # 实例化词云对象
+        wc = WordCloud(
+            width=800,
+            height=400,
+            background_color='white',
+            font_path=os.path.join(settings.STATICFILES_DIRS[0], 'font/MSYH.TTF')
+        )  # 要指定字体
+        # 生成词云图
+        wc.generate(text_new)
+        # 保存词云图
+        wc.to_file(os.path.join(settings.MEDIA_ROOT, 'wordcloud.jpg'))
+
+    else:
+        return redirect('user:user_portrait')
+
+    context = {
+        'username': user.name,
+        'accuracy': accuracy,
+        'index': index,
+        'affinity': affinity,
+        'data': data,
+    }
+    return render(request, 'user/user-visualization.html', context=context)
+
+
+class RecommendationFeedback(View):
+
+    def get(self, request):
+        context = {
+            "goods_types": goods_types
+        }
+        return render(request, 'user/user-recommend-feedback.html', context=context)
+
+    def post(self, request):
+        pass

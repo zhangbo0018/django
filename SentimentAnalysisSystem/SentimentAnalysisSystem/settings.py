@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -133,9 +133,9 @@ STATICFILES_DIRS = [
 ]
 
 # 设置媒体路由地址信息
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'  # 设置媒体文件在URL中的前缀
 # 获取media文件夹的完整路径信息
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 设置媒体文件的实际存储路径
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

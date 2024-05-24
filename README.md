@@ -1,37 +1,32 @@
 # 基于Django的在线商品评论情感分析Web系统
 
 #### 介绍
+
 基于Django的在线商品评论情感分析Web系统，可以上传你的商品评论数据进行训练，或者输入单条商品评价进行预测
 
 #### 软件架构
-软件架构说明
 
+> 基于python的商品评价及用户画像情感信息智能提取及推荐系统主要分为以下几个模块：用户画像模块、用户模块、算法模型模块、个性化推荐模块
+
+![](markdown/图片1.png)
+
+![](markdown/图片2.png)
+
+**用户画像建模**
+
+![](markdown/图片4.png)
+
+**个性化推荐功能**
+
+![](markdown/图片3.png)
+
+**用户画像可视化**
+
+![](markdown/图片5.png)
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. pip install django4.2.3
+2. 在settings.py文件中，修改mysql数据库的账号密码。
+3. pip install -r requirements.txt
+4. 运行的方式：在pycharm中找到运行按钮运行程序；在manage.py文件路径下打开cmd，输入python manage.py runserver运行程序

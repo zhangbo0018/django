@@ -23,8 +23,8 @@ urlpatterns = [
     re_path(r'^upload/$', views.Upload.as_view(), name='upload'),
     # 情感分析
     re_path(r'^sentiment_analysis/$', views.SentimentAnalysis.as_view(), name='sentiment_analysis'),
-    # # 输出视频流
-    # re_path('^video_stream/$', views.stream_video, name='stream'),
     # # 下载预测结果
     # re_path(r'^download/$', views.download, name='download'),
+    # 展示数据集
+    re_path(r'^display_dataset/$', views.display_dataset, name='display_dataset'),
 ]

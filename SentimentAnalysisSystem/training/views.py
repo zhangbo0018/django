@@ -1,4 +1,6 @@
 import os
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 from django.views import View
 from django.conf import settings
@@ -82,6 +84,30 @@ class SentimentAnalysis(View):
         model_path = os.path.join(settings.STATICFILES_DIRS[0], 'model/mlp_model.pkl')
         joblib.dump(mlp, model_path)
 
-        return render(request, 'training/training-visualization.html')
+        return render(request, 'training/training-visualization.html', context={'msg': '情感分析建模已完成！'})
 
 
+# 展示数据集
+def display_dataset(request):
+    # 导入数据集
+    data = pd.read_excel(os.path.join(settings.MEDIA_ROOT, 'data.xlsx'), sheet_name='Sheet1')
+    print(data)
+    # 设置每页显示的数量
+    paginator = Paginator(data, per_page=10)  # 每页显示10篇文章
+
+    # 获取当前请求页面的页码，默认为1
+    page_number = request.GET.get('page', 1)
+
+    # 尝试获取指定页码的数据
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        # 如果请求的页码不是整数，则返回第一页
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # 如果请求的页码超出范围，则返回最后一页
+        page_obj = paginator.page(paginator.num_pages)
+
+    context = {'page_obj': page_obj}
+
+    return render(request, 'training/training-display-dataset.html', context=context)

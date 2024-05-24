@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box" style="border: 2px solid #dddddd; text-align: center;">
-                        <strong style="font-size: 26px;">
+                        <strong style="font-weight: bold; font-size: 34px; text-shadow: 2px 2px 4px #555555; text-align: center;">
                             {{ message }}
                         </strong>
 
@@ -75,6 +75,13 @@
                         <div class="card-body" style="border: 2px solid #dddddd;text-align: center;">
                             <a class="btn btn-primary btn-sm btn-block text-white" href="{% url 'user:recommend' %}">
                                 <span style="font-size: 20px;">开始个性化推荐</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card-body" style="border: 2px solid #dddddd;text-align: center;">
+                            <a class="btn btn-primary btn-sm btn-block text-white" href="{% url 'user:visualization' %}">
+                                <span style="font-size: 20px;">用户画像可视化</span>
                             </a>
                         </div>
                     </div>

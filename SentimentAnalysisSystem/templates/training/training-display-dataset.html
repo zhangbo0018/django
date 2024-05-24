@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title" style="text-align: center;"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body"><h5 class="header-title pb-3 mt-0">数据集展示</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                    <tr class="align-self-center">
+                                        <th>购买商品名称</th>
+                                        <th>情感分析</th>
+                                        <th>商品品类</th>
+                                        <th>评价</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>波西米亚风格连衣裙</td>
+                                        <td>好评</td>
+                                        <td>女装</td>
+                                        <td style="width: 30%;">感觉实物比图片更好看，价格和质量成正比，这次购物非常满意，喜欢的姐妹赶紧下手跟描述的是一样的，价格很实惠，质量非常好，性价比很高，强烈推荐。很显高档，物美价廉，要买的朋友可以下单噢！</td>
+                                    </tr>
+                                    <tr>
+                                        <td>流苏装饰牛仔外套</td>
+                                        <td>好评</td>
+                                        <td>女装</td>
+                                        <td style="width: 30%;">这款牛仔外套的流苏设计太别致了，穿上它感觉整个人都充满了活力，质量也很好，非常满意！</td>
+                                    </tr>
+                                    <tr>
+                                        <td>印花雪纺长裙</td>
+                                        <td>好评</td>
+                                        <td>女装</td>
+                                        <td style="width: 30%;">雪纺的材质轻盈飘逸，印花设计也非常独特，很适合度假时穿，感觉就像漫步在花海中，大爱！</td>
+                                    </tr>
+                                    <tr>
+                                        <td>复古风格高腰裤</td>
+                                        <td>好评</td>
+                                        <td>女装</td>
+                                        <td style="width: 30%;">高腰设计很显身材，复古风格也很对我的口味，但是感觉面料稍微有点硬，希望洗过之后会好一些。</td>
+                                    </tr>
+                                    <tr>
+                                        <td>破洞牛仔裤</td>
+                                        <td>差评</td>
+                                        <td>女装</td>
+                                        <td style="width: 30%;">这条牛仔裤的破洞设计很时尚，穿起来很有个性，但是感觉破洞有点太大了，需要注意走光。</td>
+                                    </tr>
+                                    {% for good in page_obj.object_list %}
+                                        <!-- 显示详情 -->
+                                        {{ good }}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!--end table-responsive-->
+                            <div class="pt-3 border-top text-right">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        {% if page_obj.has_previous %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                                        {% endif %}
+
+                                            <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+
+                                        {% if page_obj.has_next %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

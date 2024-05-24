@@ -29,4 +29,8 @@ urlpatterns = [
     re_path(r'^recommend/$', views.PersonalizedRecommendation.as_view(), name='recommend'),
     # 展示个性化推荐结果
     re_path(r'^display_recommend/$', views.display_recommend, name='display_recommend'),
+    # 个性化推荐反馈
+    re_path(r'^display_feedback/$', views.RecommendationFeedback.as_view(), name='display_feedback'),
+    # 用户画像可视化
+    re_path(r'^visualization/$', views.visualization, name='visualization'),
 ]

@@ -8,11 +8,11 @@ class Login(View):
 
     def get(self, request):
         # 判断一下是否有cookie
-        user = request.COOKIES.get('user')
-        if user == 'is_login':
+        user_login = request.COOKIES.get('user_login')
+        if user_login == 'is_login':
             return redirect('user:user_portrait')  # 如果有cookie就直接进来
         else:
-            # 重定向到登录页
+            # 登录页
             return render(request, 'login/page-login.html')
 
     def post(self, request):
@@ -44,9 +44,9 @@ def logout(request):
     user_login = request.COOKIES.get('user_login')
     print('logout = ', user_login)
     if user_login == 'is_login':
-        response = redirect('login:login')
+        response = render(request, 'login/page-login.html')
         response.delete_cookie('user_login')
         response.delete_cookie('username')
         return response
     else:
-        return redirect('login:login')
+        return render(request, 'user/user-upload.html')
